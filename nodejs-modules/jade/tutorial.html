@@ -1,0 +1,105 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Jade - Template Engine</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="public/stylesheets/bootstrap.css"><link rel="stylesheet" href="public/stylesheets/codemirror.css"><link rel="stylesheet" href="public/stylesheets/all.css"><link rel="stop" href="public/images/tile.png"><link rel="stop" href="public/images/top.png"><link rel="stop" href="public/images/logo.png"></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div class="container"><nav role="navigation" class="navbar navbar-default"><div class="navbar-header"><button type="button" data-toggle="collapse" data-target="navbar-collapse" class="navbar-toggle"><span class="sr-only"></span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li><a href="index.html">Home</a></li><li><a href="tutorial.html">Tutorial</a></li><li><a href="reference.html">Language Reference</a></li><li><a href="api.html">API</a></li><li><a href="command-line.html">Command Line</a></li><li><a href="demo.html">Online Demo</a></li></ul></div></nav></div></div><div class="container"><div id="body"><h2>Tutorial</h2><h3>Introduction</h3><p class="note">This tutorial is a work in progress. Once it's finished it will become a fully fledged getting started guide.</p><p>Welcome to the Jade templating engine.  Jade is designed primarily for server side templating in node.js, however it can be used in many other environments.  It is only intended to produce XML like documents (HTML, RSS etc.) so don't use it to create plain text/markdown/CSS/whatever documents.</p><p>This tutorial will take you through:</p><ul><li><a href="tutorial.html#Basics">The Basics</a><ul><li>Creating Simple Tags</li><li>Putting Text Inside your Tags</li><li>Attributes</li><li>IDs and Classes</li></ul></li><li><a href="tutorial.html#Javascript">JavaScript</a><ul><li>Outputing Text</li><li>Setting Attributes</li><li>Loops and Conditionals</li></ul></li><li><a href="tutorial.html#Advanced">Advanced Templating</a><ul><li>Extends & Blocks</li><li>Includes</li><li>Mixins</li><li>Filters</li></ul></li></ul><h3 id="Basics">The Basics</h3><p>Jade can be used just as a short hand for HTML.  This section covers everything you need to know to do that.</p><h4>Creating Simple Tags</h4><p>Jade is whitespace sensitive, so there's no need to close your tags; Jade does that for you.  You can also nest tags within other tags just by indenting them.</p><div data-control="interactive" class="row"><div class="col-md-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">div</span>
+<span class="cm-indent">  </span><span class="cm-tag">address</span>
+<span class="cm-indent">  </span><span class="cm-tag">i</span>
+<span class="cm-indent">  </span><span class="cm-tag">strong</span></code></pre></div><div class="col-md-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;div</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;address</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/address</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;i</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/i</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;strong</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/strong</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span></code></pre></div></div><h4>Putting Text Inside your Tags</h4><p>By default, the content of a tag is parsed as more jade.  There are three ways to put plain text inside a tag.</p><div data-control="interactive" class="row"><div class="col-md-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">h1</span><span class="cm-string"> Welcome to Jade</span>
+<span class="cm-tag">p</span>
+<span class="cm-indent">  </span><span class="cm-string">| Text can be included in a number of</span>
+<span class="cm-indent">  </span><span class="cm-string">| different ways.</span>
+<span class="cm-tag">p</span><span class="cm-dot">.</span>
+<span class="cm-string">  This way is shortest if you need big</span>
+<span class="cm-string">  blocks of text spanning multiple</span>
+<span class="cm-string">  lines.</span></code></pre></div><div class="col-md-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Welcome to Jade<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Text can be included in a number of
+   different ways.<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>This way is shortest if you need big
+   blocks of text spanning multiple
+   lines.<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span></code></pre></div></div><h4>Adding Attributes to your Tags</h4><p>To add attributes you put them in brackets after the tag name, separated by an optional comma.</p><div data-control="interactive" class="row"><div class="col-md-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">h1</span><span class="cm-punctuation">(</span><span class="cm-attribute">id</span>=<span class="cm-string">&quot;title&quot;</span><span class="cm-punctuation">)</span><span class="cm-string"> Welcome to Jade</span>
+<span class="cm-tag">button</span><span class="cm-punctuation">(</span><span class="cm-attribute">class</span>=<span class="cm-string">&quot;btn&quot;</span>, <span class="cm-attribute">data-action</span>=<span class="cm-string">&quot;bea&quot;</span><span class="cm-punctuation">)</span><span class="cm-dot">.</span>
+<span class="cm-string">  Be Awesome</span></code></pre></div><div class="col-md-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;h1</span> <span class="cm-attribute">id</span>=<span class="cm-string">&quot;title&quot;</span><span class="cm-tag">&gt;</span>Welcome to Jade<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;button</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;btn&quot;</span> <span class="cm-attribute">data-action</span>=<span class="cm-string">&quot;bea&quot;</span><span class="cm-tag">&gt;</span>
+  Be Awesome
+<span class="cm-tag">&lt;/button</span><span class="cm-tag">&gt;</span></code></pre></div></div><h4>IDs and Classes</h4><p>Adding IDs and Classes is super common, so we made it super easy to do by adding a simple short hand.  The syntax is just like that of CSS selectors:</p><div data-control="interactive" class="row"><div class="col-md-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">h1</span><span class="cm-builtin">#title</span><span class="cm-string"> Welcome to Jade</span>
+<span class="cm-tag">button</span><span class="cm-qualifier">.btn</span><span class="cm-punctuation">(</span><span class="cm-attribute">data-action</span>=<span class="cm-string">&quot;bea&quot;</span><span class="cm-punctuation">)</span><span class="cm-string"> Awesome</span></code></pre></div><div class="col-md-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;h1</span> <span class="cm-attribute">id</span>=<span class="cm-string">&quot;title&quot;</span><span class="cm-tag">&gt;</span>Welcome to Jade<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;button</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;btn&quot;</span> <span class="cm-attribute">data-action</span>=<span class="cm-string">&quot;bea&quot;</span><span class="cm-tag">&gt;</span>
+  Awesome
+<span class="cm-tag">&lt;/button</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><h3 id="Javascript">JavaScript</h3><p>Jade is much more than just a short hand for HTML.  It also has features that let you build dynamic templates.</p><h4>Outputing Text</h4><p>You can output raw text from JavaScript variables.  Jade will also helpfully filter the text for you so it's safe from nasty HTML injection attacks.</p><div><pre class="cm-s-default"><code><span class="cm-keyword">var</span> <span class="cm-variable">jade</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;jade&#39;</span>);
+<span class="cm-keyword">var</span> <span class="cm-variable">fn</span> = <span class="cm-variable">jade</span>.<span class="cm-property">compile</span>(<span class="cm-variable">jadeTemplate</span>);
+<span class="cm-keyword">var</span> <span class="cm-variable">htmlOutput</span> = <span class="cm-variable">fn</span>({
+  <span class="cm-property">maintainer</span>: {
+    <span class="cm-property">name</span>: <span class="cm-string">&#39;Forbes Lindesay&#39;</span>,
+    <span class="cm-property">twitter</span>: <span class="cm-string">&#39;@ForbesLindesay&#39;</span>,
+    <span class="cm-property">blog</span>: <span class="cm-string">&#39;forbeslindesay.co.uk&#39;</span>
+  }
+});</code></pre><div class="row"><div class="col-md-6"><pre class="cm-s-default"><code><span class="cm-tag">h1</span>
+<span class="cm-indent">  </span><span class="cm-string">| Maintainer:</span>
+<span class="cm-indent">  </span><span class="cm-punctuation">=</span> <span class="cm-string">&#39; &#39;</span> + <span class="cm-variable">maintainer</span>.<span class="cm-property">name</span>
+<span class="cm-tag">table</span>
+<span class="cm-indent">  </span><span class="cm-tag">tr</span>
+<span class="cm-indent">    </span><span class="cm-tag">td</span><span class="cm-string"> Twitter</span>
+<span class="cm-indent">    </span><span class="cm-tag">td</span><span class="cm-punctuation">=</span> <span class="cm-variable">maintainer</span>.<span class="cm-property">twitter</span>
+<span class="cm-indent">  </span><span class="cm-tag">tr</span>
+<span class="cm-indent">    </span><span class="cm-tag">td</span><span class="cm-string"> Blog</span>
+<span class="cm-indent">    </span><span class="cm-tag">td</span><span class="cm-punctuation">=</span> <span class="cm-variable">maintainer</span>.<span class="cm-property">blog</span></code></pre></div><div class="col-md-6"><pre class="cm-s-default"><code><span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Maintainer: Forbes Lindesay<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;table</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;tr</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;td</span><span class="cm-tag">&gt;</span>Twitter<span class="cm-tag">&lt;/td</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;td</span><span class="cm-tag">&gt;</span>@ForbesLindesay<span class="cm-tag">&lt;/td</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/tr</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;tr</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;td</span><span class="cm-tag">&gt;</span>Blog<span class="cm-tag">&lt;/td</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;td</span><span class="cm-tag">&gt;</span>forbeslindesay.co.uk<span class="cm-tag">&lt;/td</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/tr</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/table</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div></div><p class="note">If you <em>don't</em> want Jade to filter your output, use <code>!=</code> instead of <code>=</code>.</p><h4>Setting Attributes</h4><p>Setting attributes to JavaScript values requires no extra work:</p><div class="row"><div class="col-md-6"><pre class="cm-s-default"><code><span class="cm-tag">h1</span><span class="cm-punctuation">(</span><span class="cm-attribute">name</span>=<span class="cm-variable">maintainer</span>.<span class="cm-property">name</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">  </span><span class="cm-string">| Maintainer:</span>
+<span class="cm-indent">  </span><span class="cm-punctuation">=</span> <span class="cm-string">&#39; &#39;</span> + <span class="cm-variable">maintainer</span>.<span class="cm-property">name</span>
+<span class="cm-tag">table</span>
+<span class="cm-indent">  </span><span class="cm-tag">tr</span>
+<span class="cm-indent">    </span><span class="cm-tag">td</span><span class="cm-punctuation">(</span><span class="cm-attribute">style</span>=<span class="cm-string">&#39;width: &#39;</span>+(<span class="cm-number">100</span>/<span class="cm-number">2</span>)+<span class="cm-string">&#39;%&#39;</span><span class="cm-punctuation">)</span><span class="cm-dot">.</span>
+<span class="cm-string">      Twitter</span>
+<span class="cm-indent">    </span><span class="cm-tag">td</span><span class="cm-punctuation">=</span> <span class="cm-variable">maintainer</span>.<span class="cm-property">twitter</span>
+<span class="cm-indent">  </span><span class="cm-tag">tr</span>
+<span class="cm-indent">    </span><span class="cm-tag">td</span><span class="cm-punctuation">(</span><span class="cm-attribute">style</span>=<span class="cm-string">&#39;width: &#39;</span>+(<span class="cm-number">100</span>/<span class="cm-number">2</span>)+<span class="cm-string">&#39;%&#39;</span><span class="cm-punctuation">)</span><span class="cm-dot">.</span>
+<span class="cm-string">      Blog</span>
+<span class="cm-indent">    </span><span class="cm-tag">td</span><span class="cm-punctuation">=</span> <span class="cm-variable">maintainer</span>.<span class="cm-property">blog</span></code></pre></div><div class="col-md-6"><pre class="cm-s-default"><code><span class="cm-tag">&lt;h1</span> <span class="cm-attribute">name</span>=<span class="cm-string">&quot;Forbes Lindesay&quot;</span><span class="cm-tag">&gt;</span>
+  Maintainer: Forbes Lindesay
+<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;table</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;tr</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;td</span> <span class="cm-attribute">style</span>=<span class="cm-string">&quot;width: 50%&quot;</span><span class="cm-tag">&gt;</span>Twitter<span class="cm-tag">&lt;/td</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;td</span><span class="cm-tag">&gt;</span>@ForbesLindesay<span class="cm-tag">&lt;/td</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/tr</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;tr</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;td</span> <span class="cm-attribute">style</span>=<span class="cm-string">&quot;width: 50%&quot;</span><span class="cm-tag">&gt;</span>Blog<span class="cm-tag">&lt;/td</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;td</span><span class="cm-tag">&gt;</span>forbeslindesay.co.uk<span class="cm-tag">&lt;/td</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/tr</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/table</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><h4>Loops and Conditionals</h4><p>You can use if statements to decide what to display depending on various factors - maybe a user is logged in or not, or some content exists or not, or a combination of factors.</p><p>Jade's if statements are almost exactly like those present in JavaScript, except the parentheses are optional, and you don't need braces!</p><div data-control="interactive" class="row"><div class="col-md-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-punctuation">-</span> <span class="cm-keyword">var</span> <span class="cm-variable">user</span> = { <span class="cm-property">name</span>: <span class="cm-string">&#39;John&#39;</span> }
+<span class="cm-keyword">if</span> <span class="cm-variable">user</span>
+<span class="cm-indent">  </span><span class="cm-tag">div</span><span class="cm-qualifier">.welcomebox</span>
+<span class="cm-indent">    </span><span class="cm-comment">// Filtered inline output</span>
+<span class="cm-indent">    </span><span class="cm-tag">p</span><span class="cm-dot">.</span>
+<span class="cm-string">      Welcome, #{user.name}</span>
+<span class="cm-keyword">else</span>
+<span class="cm-indent">  </span><span class="cm-tag">div</span><span class="cm-qualifier">.loginbox</span>
+<span class="cm-indent">    </span><span class="cm-tag">form</span><span class="cm-punctuation">(</span><span class="cm-attribute">name</span>=<span class="cm-string">&quot;login&quot;</span>, <span class="cm-attribute">action</span>=<span class="cm-string">&quot;/login&quot;</span>, <span class="cm-attribute">method</span>=<span class="cm-string">&quot;post&quot;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">      </span><span class="cm-tag">input</span><span class="cm-punctuation">(</span><span class="cm-attribute">type</span>=<span class="cm-string">&quot;text&quot;</span>, <span class="cm-attribute">name</span>=<span class="cm-string">&quot;user&quot;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">      </span><span class="cm-tag">input</span><span class="cm-punctuation">(</span><span class="cm-attribute">type</span>=<span class="cm-string">&quot;password&quot;</span>, <span class="cm-attribute">name</span>=<span class="cm-string">&quot;pass&quot;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">      </span><span class="cm-tag">input</span><span class="cm-punctuation">(</span><span class="cm-attribute">type</span>=<span class="cm-string">&quot;submit&quot;</span>, <span class="cm-attribute">value</span>=<span class="cm-string">&quot;login&quot;</span><span class="cm-punctuation">)</span></code></pre></div><div class="col-md-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;div</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;welcomebox&quot;</span><span class="cm-tag">&gt;</span>
+  <span class="cm-comment">&lt;!-- Filtered inline output--&gt;</span>
+  <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Welcome, John<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><h3 id="Advanced">Advanced Templating</h3><h4>Extends & Blocks</h4><h4>Includes</h4><h4>Mixins</h4><h4>Filters</h4><p>To Be Continued....</p><p>The jade source for this file can be viewed (and edited/improved) on <a href="https://github.com/visionmedia/jade/blob/gh-pages/src/pages/tutorial.jade">GitHub</a></p></div></div><div id="footer"></div></div><script src="client.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script></body></html>
